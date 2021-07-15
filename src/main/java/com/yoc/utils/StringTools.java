@@ -1,0 +1,93 @@
+package com.yoc.utils;
+
+import java.util.Random;
+
+/**
+ * @Description
+ * @Author 李定军
+ * @Date 2021-06-28
+ */
+public class StringTools {
+
+    //中国移动
+    public static final String[] CHINA_MOBILE = {
+            "134", "135", "136", "137", "138", "139", "150", "151", "152", "157", "158", "159",
+            "182", "183", "184", "187", "188", "178", "147", "172", "198"
+    };
+    //中国联通
+    public static final String[] CHINA_UNICOM = {
+            "130", "131", "132", "145", "155", "156", "166", "171", "175", "176", "185", "186", "166"
+    };
+    //中国电信
+    public static final String[] CHINA_TELECOME = {
+            "133", "149", "153", "173", "177", "180", "181", "189", "199"
+    };
+
+    /**
+     * 生成手机号
+     *
+     * @param op 0 移动 1 联通 2 电信
+     */
+    public static String createMobile(int op) {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        String mobile01;//手机号前三位
+        int temp;
+        switch (op) {
+            case 0:
+                mobile01 = CHINA_MOBILE[random.nextInt(CHINA_MOBILE.length)];
+                break;
+            case 1:
+                mobile01 = CHINA_UNICOM[random.nextInt(CHINA_UNICOM.length)];
+                break;
+            case 2:
+                mobile01 = CHINA_TELECOME[random.nextInt(CHINA_TELECOME.length)];
+                break;
+            default:
+                mobile01 = "op标志位有误！";
+                break;
+        }
+        if (mobile01.length() > 3) {
+            return mobile01;
+        }
+        sb.append(mobile01);
+        //生成手机号后8位
+        for (int i = 0; i < 8; i++) {
+            temp = random.nextInt(10);
+            sb.append(temp);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 随机生成字符串
+     *
+     * @param len
+     * @return
+     */
+    public static String genRandomNum(int len) {
+        int maxNum = 36;
+        int i;
+        int count = 0;
+        char[] str = {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+                'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+                'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+                'X', 'Y', 'Z'};
+        StringBuilder sb = new StringBuilder();
+        Random r = new Random();
+        while (count < len) {
+            i = Math.abs(r.nextInt(maxNum));
+            if (i >= 0 && i < str.length) {
+                sb.append(str[i]);
+                count++;
+            }
+        }
+        return sb.toString();
+    }
+
+
+}
